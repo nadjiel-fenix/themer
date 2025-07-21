@@ -8,14 +8,15 @@ import {
 } from "react";
 import { ThemeProvider, type Theme as MuiTheme } from "@mui/material";
 
-import { light } from "../../themes";
+import { light, dark } from "../../themes";
 
-const themes = { light };
+const themes = { light, dark };
 
 type Theme = keyof typeof themes;
 
 interface ThemeProps {
-  theme: MuiTheme;
+  theme: Theme;
+  value: MuiTheme;
   setTheme: (theme: Theme) => void;
 }
 
@@ -41,7 +42,7 @@ export function Provider({ children }: PropsWithChildren) {
   };
 
   return (
-    <Context.Provider value={{ theme: value, setTheme: setThemeWrapper }}>
+    <Context.Provider value={{ theme, value, setTheme: setThemeWrapper }}>
       <ThemeProvider theme={value}>{children}</ThemeProvider>
     </Context.Provider>
   );
