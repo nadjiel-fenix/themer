@@ -1,0 +1,57 @@
+/* eslint-disable react-refresh/only-export-components */
+import {
+  createContext,
+  useState,
+  useContext,
+  type PropsWithChildren,
+} from "react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import "dayjs/locale/en";
+import "dayjs/locale/pt-br";
+
+type Locale = "en" | "pt-br";
+
+interface LocaleProps {
+  locale: Locale;
+  setLocale: (theme: Locale) => void;
+}
+
+export const Context = createContext<LocaleProps | null>(null);
+
+export function Provider({ children }: PropsWithChildren) {
+  const [locale, setLocale] = useState<Locale>(
+    () => (localStorage.getItem("locale") || "en") as Locale
+  );
+
+  const setLocaleWrapper = (locale: Locale) => {
+    setLocale((prev) => {
+      if (prev === locale) return prev;
+
+      localStorage.setItem("locale", locale);
+
+      return locale;
+    });
+  };
+
+  return (
+    <Context.Provider value={{ locale, setLocale: setLocaleWrapper }}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+        {children}
+      </LocalizationProvider>
+    </Context.Provider>
+  );
+}
+
+const useLocale = (): LocaleProps => {
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error("useLocale must be used within a LocaleProvider");
+  }
+
+  return context;
+};
+
+export default useLocale;
