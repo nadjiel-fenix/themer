@@ -1,11 +1,13 @@
 import { ThemeShowcase } from "./pages";
 
-import { Theme } from "./contexts";
+import { Theme, Locale } from "./contexts";
 
 function App() {
   return (
     <Theme.Provider>
-      <ThemeShowcase />
+      <Locale.Provider>
+        <ThemeShowcase />
+      </Locale.Provider>
     </Theme.Provider>
   );
 }
