@@ -32,10 +32,12 @@ import {
   Grid,
   FormControl,
   InputLabel,
+  Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useTheme } from "../../contexts";
 
@@ -206,6 +208,15 @@ function ThemeShowcase() {
             Show Dialog
           </Button>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Typography variant="h4" gutterBottom>
+          Calendar
+        </Typography>
+        <Box mt={2}>
+          <DatePicker label="Select a date" />
+        </Box>
       </Grid>
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
