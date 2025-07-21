@@ -52,7 +52,7 @@ function ThemeShowcase() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const { theme, value: themeValue, setTheme } = useTheme();
-  const { locale, setLocale } = useLocale();
+  const { locale, setLocale } = useLocale() ?? {};
 
   return (
     <div style={{ padding: 24 }}>
@@ -76,7 +76,7 @@ function ThemeShowcase() {
                 labelId="locale-label"
                 value={locale}
                 onChange={(e) => {
-                  setLocale(e.target.value);
+                  setLocale?.(e.target.value);
                 }}
                 label="Locale"
               >

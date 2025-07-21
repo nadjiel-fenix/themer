@@ -44,12 +44,8 @@ export function Provider({ children }: PropsWithChildren) {
   );
 }
 
-const useLocale = (): LocaleProps => {
+const useLocale = (): LocaleProps | null => {
   const context = useContext(Context);
-
-  if (!context) {
-    throw new Error("useLocale must be used within a LocaleProvider");
-  }
 
   return context;
 };
