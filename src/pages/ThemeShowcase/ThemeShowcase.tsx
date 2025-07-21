@@ -33,6 +33,7 @@ import {
   FormControl,
   InputLabel,
   Box,
+  TablePagination,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -80,7 +81,7 @@ function ThemeShowcase() {
                 }}
                 label="Locale"
               >
-                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="en-us">English</MenuItem>
                 <MenuItem value="pt-br">Português</MenuItem>
               </Select>
             </FormControl>
@@ -235,6 +236,16 @@ function ThemeShowcase() {
         <Box mt={2}>
           <DatePicker label="Select a date" />
         </Box>
+      </Grid>
+
+      <Grid item xs={12}>
+        <TablePagination
+          count={2000}
+          rowsPerPage={10}
+          page={1}
+          component="div"
+          onPageChange={() => {}}
+        />
       </Grid>
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
