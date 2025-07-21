@@ -40,6 +40,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useTheme } from "../../contexts";
+import { useLocale } from "../../contexts";
 
 function ThemeShowcase() {
   const [selectValue, setSelectValue] = useState("");
@@ -51,22 +52,39 @@ function ThemeShowcase() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const { theme, value: themeValue, setTheme } = useTheme();
+  const { locale, setLocale } = useLocale();
 
   return (
     <div style={{ padding: 24 }}>
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6">Material UI Theme Showcase</Typography>
-          <IconButton
-            color="inherit"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          >
-            {themeValue.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
-          </IconButton>
+          <Box>
+            <IconButton
+              color="inherit"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            >
+              {themeValue.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+            <FormControl size="small" variant="outlined" sx={{ minWidth: 120 }}>
+              <InputLabel id="locale-label">Locale</InputLabel>
+              <Select
+                labelId="locale-label"
+                value={locale}
+                onChange={(e) => {
+                  setLocale(e.target.value);
+                }}
+                label="Locale"
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="pt-br">Português</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </Toolbar>
       </AppBar>
 
