@@ -1,3 +1,3 @@
 export * as Locale from "./Locale";
 export { default as useLocale } from "./Locale";
-export { toKebabLocale, toCamelLocale } from "./utils";
+export { toKebabLocale, toCamelLocale, getMuiLocale } from "./utils";
