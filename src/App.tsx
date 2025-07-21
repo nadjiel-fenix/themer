@@ -1,5 +1,7 @@
+import { ThemeShowcase } from "./pages";
+
 function App() {
-  return <></>;
+  return <ThemeShowcase />;
 }
 
 export default App;
