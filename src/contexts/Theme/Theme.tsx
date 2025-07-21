@@ -6,31 +6,28 @@ import {
   useContext,
   type PropsWithChildren,
 } from "react";
-import { ThemeProvider, type Theme as MuiTheme } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { light, dark } from "../../themes";
 
+import { useLocale, getMuiLocale } from "../Locale";
+
+import type { Theme, ThemeProps } from "./types";
+
 const themes = { light, dark };
-
-type Theme = keyof typeof themes;
-
-interface ThemeProps {
-  theme: Theme;
-  value: MuiTheme;
-  setTheme: (theme: Theme) => void;
-}
 
 export const Context = createContext<ThemeProps | null>(null);
 
 export function Provider({ children }: PropsWithChildren) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem("theme") as Theme) || "light"
+    () => (localStorage.getItem("theme") || "light") as Theme
   );
+  const { locale = "en-us" } = useLocale() ?? {};
 
   const value = useMemo(() => {
-    return themes[theme];
-  }, [theme]);
+    return createTheme(themes[theme], getMuiLocale(locale));
+  }, [theme, locale]);
 
   const setThemeWrapper = (theme: Theme) => {
     setTheme((prev) => {
@@ -56,7 +53,7 @@ const useTheme = (): ThemeProps => {
   const context = useContext(Context);
 
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error("useTheme must be used within a Theme.Provider");
   }
 
   return context;
