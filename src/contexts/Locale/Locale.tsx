@@ -11,7 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
-type Locale = "en" | "pt-br";
+type Locale = "en-us" | "pt-br";
 
 interface LocaleProps {
   locale: Locale;
@@ -22,7 +22,7 @@ export const Context = createContext<LocaleProps | null>(null);
 
 export function Provider({ children }: PropsWithChildren) {
   const [locale, setLocale] = useState<Locale>(
-    () => (localStorage.getItem("locale") || "en") as Locale
+    () => (localStorage.getItem("locale") || "en-us") as Locale
   );
 
   const setLocaleWrapper = (locale: Locale) => {
