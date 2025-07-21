@@ -34,6 +34,10 @@ import {
   InputLabel,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+import { useTheme } from "../../contexts";
 
 function ThemeShowcase() {
   const [selectValue, setSelectValue] = useState("");
@@ -44,11 +48,23 @@ function ThemeShowcase() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  const { theme, value: themeValue, setTheme } = useTheme();
+
   return (
     <div style={{ padding: 24 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6">Material UI Theme Showcase</Typography>
+          <IconButton
+            color="inherit"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            {themeValue.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
         </Toolbar>
       </AppBar>
 
