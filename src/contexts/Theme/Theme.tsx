@@ -7,6 +7,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import { ThemeProvider, type Theme as MuiTheme } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import { light, dark } from "../../themes";
 
@@ -43,7 +44,10 @@ export function Provider({ children }: PropsWithChildren) {
 
   return (
     <Context.Provider value={{ theme, value, setTheme: setThemeWrapper }}>
-      <ThemeProvider theme={value}>{children}</ThemeProvider>
+      <ThemeProvider theme={value}>
+        {children}
+        <CssBaseline />
+      </ThemeProvider>
     </Context.Provider>
   );
 }
