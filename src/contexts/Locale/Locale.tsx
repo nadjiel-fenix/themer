@@ -11,12 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
-type Locale = "en-us" | "pt-br";
-
-interface LocaleProps {
-  locale: Locale;
-  setLocale: (theme: Locale) => void;
-}
+import type { Locale, LocaleProps } from "./types";
 
 export const Context = createContext<LocaleProps | null>(null);
 
