@@ -5,22 +5,22 @@ import {
   useContext,
   type PropsWithChildren,
 } from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider as MuiLocaleProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
-import type { Locale, LocaleProps } from "./types";
+import type { KebabLocale, LocaleProps } from "./types";
 
 export const Context = createContext<LocaleProps | null>(null);
 
 export function Provider({ children }: PropsWithChildren) {
-  const [locale, setLocale] = useState<Locale>(
-    () => (localStorage.getItem("locale") || "en-us") as Locale
+  const [locale, setLocale] = useState<KebabLocale>(
+    () => (localStorage.getItem("locale") || "en-us") as KebabLocale
   );
 
-  const setLocaleWrapper = (locale: Locale) => {
+  const setLocaleWrapper = (locale: KebabLocale) => {
     setLocale((prev) => {
       if (prev === locale) return prev;
 
@@ -32,15 +32,19 @@ export function Provider({ children }: PropsWithChildren) {
 
   return (
     <Context.Provider value={{ locale, setLocale: setLocaleWrapper }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+      <MuiLocaleProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
         {children}
-      </LocalizationProvider>
+      </MuiLocaleProvider>
     </Context.Provider>
   );
 }
 
-const useLocale = (): LocaleProps | null => {
+const useLocale = (): LocaleProps => {
   const context = useContext(Context);
+
+  if (context === null) {
+    throw new Error("useLocale must be used within a Locale.Provider");
+  }
 
   return context;
 };

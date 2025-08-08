@@ -1,20 +1,20 @@
 import { enUS, ptBR } from "@mui/material/locale";
 
-import type { CamelLocale, Locale } from "./types";
+import type { CamelLocale, KebabLocale, MuiLocale } from "./types";
 
 const muiLocales = { enUS, ptBR };
 
-export function toKebabLocale(input: string): string {
-  return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+export function toKebabLocale(input: CamelLocale): KebabLocale {
+  return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase() as KebabLocale;
 }
 
-export function toCamelLocale(input: string): string {
+export function toCamelLocale(input: KebabLocale): CamelLocale {
   return input
     .split("-")
     .map((part, i) => (i === 0 ? part : part.toUpperCase()))
-    .join("");
+    .join("") as CamelLocale;
 }
 
-export function getMuiLocale(kebabLocale: Locale) {
-  return muiLocales[toCamelLocale(kebabLocale) as CamelLocale];
+export function toMuiLocale(kebabLocale: KebabLocale): MuiLocale {
+  return muiLocales[toCamelLocale(kebabLocale)];
 }
