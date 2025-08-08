@@ -1,11 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  type PropsWithChildren,
-} from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { LocalizationProvider as MuiLocaleProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -15,18 +9,20 @@ import "dayjs/locale/pt-br";
 import { toDayJsLocale } from "./utils";
 import { Theme } from "../Theme";
 
-import type { KebabLocale, LocaleProps } from "./types";
+import type { LocaleProps, KebabLocale, LocaleContext } from "./types";
 
-export const Context = createContext<LocaleProps | null>(null);
+export const Context = createContext<LocaleContext | null>(null);
 
 /**
  * Provides information about localization.
  * If this Provider is used within the context of a ThemeProvider,
  * the locale of the theme is also managed by this context.
  */
-export function Provider({ children }: PropsWithChildren) {
+export function Provider({ defaultValue = "en-us", children }: LocaleProps) {
   const [locale, setLocale] = useState(
-    (localStorage.getItem("locale") || "en-us") as KebabLocale
+    (localStorage.getItem("locale") ||
+      navigator.language ||
+      defaultValue) as KebabLocale
   );
 
   const theme = useContext(Theme.Context);
@@ -59,7 +55,7 @@ export function Provider({ children }: PropsWithChildren) {
   );
 }
 
-const useLocale = (): LocaleProps => {
+const useLocale = (): LocaleContext => {
   const context = useContext(Context);
 
   if (context === null) {

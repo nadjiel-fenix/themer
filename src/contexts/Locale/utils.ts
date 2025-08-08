@@ -9,12 +9,12 @@ const dayJsLocales: Record<CamelLocale, DayJsLocale> = {
   ptBR: "pt-br",
 };
 
-export function toKebabLocale(input: CamelLocale): KebabLocale {
-  return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase() as KebabLocale;
+export function toKebabLocale(camelLocale: CamelLocale): KebabLocale {
+  return camelLocale.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase() as KebabLocale;
 }
 
-export function toCamelLocale(input: KebabLocale): CamelLocale {
-  return input
+export function toCamelLocale(kebabLocale: KebabLocale): CamelLocale {
+  return kebabLocale
     .split("-")
     .map((part, i) => (i === 0 ? part : part.toUpperCase()))
     .join("") as CamelLocale;
