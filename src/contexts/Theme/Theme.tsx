@@ -6,27 +6,33 @@ import {
   useContext,
   type PropsWithChildren,
 } from "react";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { light, dark } from "../../themes";
 
-import { useLocale, getMuiLocale } from "../Locale";
+import { toMuiLocale } from "../Locale";
 
 import type { Theme, ThemeProps } from "./types";
+import type { KebabLocale } from "../Locale/types";
 
 const themes = { light, dark };
 
 export const Context = createContext<ThemeProps | null>(null);
 
+/**
+ * Manages the theme of the application in integration with MUI.
+ * This Provider also exposes utils to manage the locale of MUI's theme,
+ * besides the theme object itself.
+ */
 export function Provider({ children }: PropsWithChildren) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem("theme") || "light") as Theme
+  const [theme, setTheme] = useState(
+    (localStorage.getItem("theme") || "light") as Theme
   );
-  const { locale = "en-us" } = useLocale() ?? {};
+  const [locale, setLocale] = useState("en-us" as KebabLocale);
 
-  const value = useMemo(() => {
-    return createTheme(themes[theme], getMuiLocale(locale));
+  const muiTheme = useMemo(() => {
+    return createTheme(themes[theme], toMuiLocale(locale));
   }, [theme, locale]);
 
   const setThemeWrapper = (theme: Theme) => {
@@ -40,11 +46,19 @@ export function Provider({ children }: PropsWithChildren) {
   };
 
   return (
-    <Context.Provider value={{ theme, value, setTheme: setThemeWrapper }}>
-      <ThemeProvider theme={value}>
+    <Context.Provider
+      value={{
+        theme,
+        setTheme: setThemeWrapper,
+        muiTheme,
+        locale,
+        setLocale,
+      }}
+    >
+      <MuiThemeProvider theme={muiTheme}>
         {children}
         <CssBaseline />
-      </ThemeProvider>
+      </MuiThemeProvider>
     </Context.Provider>
   );
 }
