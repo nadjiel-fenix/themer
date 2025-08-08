@@ -4,11 +4,11 @@ import { Theme, Locale } from "./contexts";
 
 function App() {
   return (
-    <Locale.Provider>
-      <Theme.Provider>
+    <Theme.Provider>
+      <Locale.Provider>
         <ThemeShowcase />
-      </Theme.Provider>
-    </Locale.Provider>
+      </Locale.Provider>
+    </Theme.Provider>
   );
 }
 
