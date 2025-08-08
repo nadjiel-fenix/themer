@@ -52,7 +52,7 @@ function ThemeShowcase() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const { theme, value: themeValue, setTheme } = useTheme();
+  const { theme, muiTheme, setTheme } = useTheme();
   const { locale, setLocale } = useLocale() ?? {};
 
   return (
@@ -65,7 +65,7 @@ function ThemeShowcase() {
               color="inherit"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             >
-              {themeValue.palette.mode === "dark" ? (
+              {muiTheme.palette.mode === "dark" ? (
                 <Brightness7Icon />
               ) : (
                 <Brightness4Icon />
