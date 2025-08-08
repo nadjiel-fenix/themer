@@ -12,6 +12,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
+import { toDayJsLocale } from "./utils";
 import { Theme } from "../Theme";
 
 import type { KebabLocale, LocaleProps } from "./types";
@@ -48,7 +49,10 @@ export function Provider({ children }: PropsWithChildren) {
 
   return (
     <Context.Provider value={{ locale, setLocale: setLocaleWrapper }}>
-      <MuiLocaleProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+      <MuiLocaleProvider
+        dateAdapter={AdapterDayjs}
+        adapterLocale={toDayJsLocale(locale)}
+      >
         {children}
       </MuiLocaleProvider>
     </Context.Provider>
