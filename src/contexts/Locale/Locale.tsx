@@ -3,6 +3,7 @@ import {
   createContext,
   useState,
   useContext,
+  useEffect,
   type PropsWithChildren,
 } from "react";
 import { LocalizationProvider as MuiLocaleProvider } from "@mui/x-date-pickers";
@@ -11,14 +12,29 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
+import { Theme } from "../Theme";
+
 import type { KebabLocale, LocaleProps } from "./types";
 
 export const Context = createContext<LocaleProps | null>(null);
 
+/**
+ * Provides information about localization.
+ * If this Provider is used within the context of a ThemeProvider,
+ * the locale of the theme is also managed by this context.
+ */
 export function Provider({ children }: PropsWithChildren) {
-  const [locale, setLocale] = useState<KebabLocale>(
-    () => (localStorage.getItem("locale") || "en-us") as KebabLocale
+  const [locale, setLocale] = useState(
+    (localStorage.getItem("locale") || "en-us") as KebabLocale
   );
+
+  const theme = useContext(Theme.Context);
+
+  useEffect(() => {
+    if (!theme) return;
+
+    theme.setLocale?.(locale);
+  }, [locale, theme]);
 
   const setLocaleWrapper = (locale: KebabLocale) => {
     setLocale((prev) => {
