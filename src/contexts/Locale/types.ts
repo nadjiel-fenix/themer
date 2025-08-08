@@ -8,6 +8,8 @@ export type KebabLocale = Locale;
 
 export type CamelLocale = "enUS" | "ptBR";
 
+export type DayJsLocale = "en" | "pt-br";
+
 export interface LocaleProps {
   locale: Locale;
   setLocale: (theme: Locale) => void;
