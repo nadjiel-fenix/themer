@@ -1,3 +1,4 @@
+import type { PropsWithChildren } from "react";
 import type { Theme as MuiTheme } from "@mui/material";
 import type { KebabLocale } from "../Locale/types";
 
@@ -5,7 +6,11 @@ export type { Theme as MuiTheme } from "@mui/material";
 
 export type Theme = "light" | "dark";
 
-export interface ThemeProps {
+export interface ThemeProps extends PropsWithChildren {
+  defaultValue?: Theme;
+}
+
+export interface ThemeContext {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   muiTheme: MuiTheme;
