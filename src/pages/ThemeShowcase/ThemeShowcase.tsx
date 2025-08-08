@@ -40,8 +40,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import { useTheme } from "../../contexts";
-import { useLocale } from "../../contexts";
+import { useTheme, useLocale } from "../../contexts";
 
 function ThemeShowcase() {
   const [selectValue, setSelectValue] = useState("");
@@ -53,7 +52,7 @@ function ThemeShowcase() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const { theme, muiTheme, setTheme } = useTheme();
-  const { locale, setLocale } = useLocale() ?? {};
+  const { locale, setLocale } = useLocale();
 
   return (
     <div style={{ padding: 24 }}>
@@ -90,7 +89,7 @@ function ThemeShowcase() {
       </AppBar>
 
       <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h4" gutterBottom>
             Typography
           </Typography>
@@ -100,7 +99,26 @@ function ThemeShowcase() {
           <Typography variant="overline">Overline text</Typography>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12 }}>
+          <TablePagination
+            count={2000}
+            rowsPerPage={10}
+            page={1}
+            component="div"
+            onPageChange={() => {}}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12 }}>
+          <Typography variant="h4" gutterBottom>
+            Calendar
+          </Typography>
+          <Box mt={2}>
+            <DatePicker label="Select a date" />
+          </Box>
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h4" gutterBottom>
             Inputs
           </Typography>
@@ -121,7 +139,7 @@ function ThemeShowcase() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h4" gutterBottom>
             Controls
           </Typography>
@@ -169,7 +187,7 @@ function ThemeShowcase() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h4" gutterBottom>
             Card
           </Typography>
@@ -186,7 +204,7 @@ function ThemeShowcase() {
           </Card>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h4" gutterBottom>
             Table
           </Typography>
@@ -212,7 +230,7 @@ function ThemeShowcase() {
           </TableContainer>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h4" gutterBottom>
             Actions
           </Typography>
@@ -227,25 +245,6 @@ function ThemeShowcase() {
             Show Dialog
           </Button>
         </Grid>
-      </Grid>
-
-      <Grid item xs={12}>
-        <Typography variant="h4" gutterBottom>
-          Calendar
-        </Typography>
-        <Box mt={2}>
-          <DatePicker label="Select a date" />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12}>
-        <TablePagination
-          count={2000}
-          rowsPerPage={10}
-          page={1}
-          component="div"
-          onPageChange={() => {}}
-        />
       </Grid>
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
